@@ -85,10 +85,21 @@ int main(void) {
 
     initializeLEDs();
     toggleLED(OFF);
+    CIRCBUFF * tx_buffer = (CIRCBUFF *)malloc(256);
+    uint8_t * transmit = (uint8_t *)malloc(128);
+    initCircBuffer(tx_buffer, transmit, 128);
+
+
+
+
 
     /* Enter an infinite loop*/
     while(1)
     {
+    	add(tx_buffer, 'a');
+    	add(tx_buffer, 'b');
+    	removeItem(tx_buffer);
+    	removeItem(tx_buffer);
 
     }
     return 0;
