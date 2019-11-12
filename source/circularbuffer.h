@@ -22,15 +22,6 @@
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
 
-typedef struct
-{
-	uint8_t * buffer;
-	uint16_t  head;
-	uint16_t  tail;
-	uint16_t length;
-	uint16_t count;
-}CIRCBUFF;
-
 typedef enum
 {
 	BUFFER_PASS,
@@ -39,6 +30,26 @@ typedef enum
 	BUFFER_FULL,
 	BUFFER_INVALID
 }BUFF_ERROR;
+
+typedef enum
+{
+	GOOD,
+	EMPTY,
+	FULL
+}BUFF_STATUS;
+
+typedef struct
+{
+	uint8_t * buffer;
+	uint16_t  head;
+	uint16_t  tail;
+	uint16_t length;
+	uint16_t count;
+	BUFF_STATUS status;
+
+}CIRCBUFF;
+
+
 
 /**
 * @brief Initializes a circular buffer given a pointer and length in bytes

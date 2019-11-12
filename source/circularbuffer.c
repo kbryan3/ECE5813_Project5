@@ -30,6 +30,7 @@ BUFF_ERROR initCircBuffer(CIRCBUFF* buffstruct, uint8_t* buff, uint16_t len)
 		buffstruct->tail = 0;
 		buffstruct->length = len;
 		buffstruct->count = len - 1;
+		buffstruct->status = EMPTY;
 	}
 	return BUFFER_PASS;
 }
@@ -41,15 +42,22 @@ BUFF_ERROR add(CIRCBUFF* buffstruct, uint8_t item)
 	{
 		return BUFFER_INVALID;
 	}
-	//check is buffer is full(tail = head + 1)
-	if(buffIsFull(buffstruct) == BUFFER_FULL)
+	//check is buffer is already full so no more writes
+	if(buffstruct->status == FULL)
 	{
 		return BUFFER_FULL;
 	}
 	else
 	{
 		buffstruct->buffer[buffstruct->head] = item; //add item to buffer
-		buffstruct->head = (buffstruct->head + 1) % buffstruct->count; //move head
+		buffstruct->status = GOOD;
+		//check if buffer is full and set status if so and do not increment
+		if(buffIsFull(buffstruct) == BUFFER_FULL)
+		{
+			buffstruct->status = FULL;
+			return BUFFER_PASS;
+		}
+		buffstruct->head = (buffstruct->head + 1) % buffstruct->length; //move head
 		return BUFFER_PASS;
 	}
 
@@ -62,22 +70,29 @@ BUFF_ERROR removeItem(CIRCBUFF* buffstruct)
 	{
 		return BUFFER_INVALID;
 	}
-	//check if buffer is empty
-	if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)
+	//check if buffer is currently empty, if so exit
+	if(buffstruct->status == EMPTY)
 	{
 		return BUFFER_EMPTY;
 	}
 	else
 	{
 		PRINTF("%c", buffstruct->buffer[buffstruct->tail]);
-		buffstruct->tail= (buffstruct->tail+1) % buffstruct->count;
+		buffstruct->status = GOOD;
+		//check if buffer pointers are equal before incrementing tail
+		if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)
+		{
+			buffstruct->status = EMPTY;
+			return BUFFER_PASS;
+		}
+		buffstruct->tail= (buffstruct->tail+1) % buffstruct->length;
 		return BUFFER_PASS;
 	}
 }
 
 BUFF_ERROR buffIsFull(CIRCBUFF* buffstruct)
 {
-	if((buffstruct->head + 1) == buffstruct->tail)
+	if(((buffstruct->head + 1) % (buffstruct->length)) == buffstruct->tail)
 	{
 		return BUFFER_FULL;
 	}
@@ -89,7 +104,7 @@ BUFF_ERROR buffIsFull(CIRCBUFF* buffstruct)
 
 BUFF_ERROR buffIsEmpty(CIRCBUFF* buffstruct)
 {
-	if(buffstruct->head == 0 && buffstruct->tail == 0)
+	if(buffstruct->tail == buffstruct->head)
 	{
 		return BUFFER_EMPTY;
 	}

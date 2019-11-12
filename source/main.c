@@ -85,9 +85,10 @@ int main(void) {
 
     initializeLEDs();
     toggleLED(OFF);
-    CIRCBUFF * tx_buffer = (CIRCBUFF *)malloc(256);
-    uint8_t * transmit = (uint8_t *)malloc(128);
-    initCircBuffer(tx_buffer, transmit, 128);
+    CIRCBUFF * tx_buffer = (CIRCBUFF *)malloc(20);
+    uint8_t * transmit = (uint8_t *)malloc(4);
+    memset(transmit, 0, 4);
+    initCircBuffer(tx_buffer, transmit, 4);
 
 
 
@@ -98,8 +99,14 @@ int main(void) {
     {
     	add(tx_buffer, 'a');
     	add(tx_buffer, 'b');
+    	add(tx_buffer, 'c');
+    	add(tx_buffer, 'd');
+    	add(tx_buffer, 'e');
     	removeItem(tx_buffer);
     	removeItem(tx_buffer);
+       	removeItem(tx_buffer);
+        removeItem(tx_buffer);
+        removeItem(tx_buffer);
 
     }
     return 0;

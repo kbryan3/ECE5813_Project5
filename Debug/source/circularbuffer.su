@@ -1,8 +1,8 @@
 circularbuffer.c:20:12:initCircBuffer	24	static
-circularbuffer.c:37:12:add	16	static
-circularbuffer.c:58:12:removeItem	16	static
-circularbuffer.c:78:12:buffIsFull	16	static
-circularbuffer.c:90:12:buffIsEmpty	16	static
-circularbuffer.c:101:12:buffIsInit	16	static
-circularbuffer.c:113:12:buffIsPointerValid	16	static
-circularbuffer.c:131:12:destroyCircBuffer	16	static
+circularbuffer.c:38:12:add	16	static
+circularbuffer.c:66:12:removeItem	16	static
+circularbuffer.c:93:12:buffIsFull	16	static
+circularbuffer.c:105:12:buffIsEmpty	16	static
+circularbuffer.c:116:12:buffIsInit	16	static
+circularbuffer.c:128:12:buffIsPointerValid	16	static
+circularbuffer.c:146:12:destroyCircBuffer	16	static
