@@ -1,15 +1,28 @@
-#include "UART.h"
+ /********************************************************************
+*
+* @file uart.c
+* @brief UART driver for FRDM Board
+*
+* @author Kyle Bryan
+* @date November 2019
+* version 1.0
+*
+*  Code is heavily based off of the github code linked to in lecture
+*  information on the source is below:
+*  BEGIN - UART0 Device Driver
+*	Code created by Shannon Strutz
+*	Date : 5/7/2014
+*	Licensed under CC BY-NC-SA 3.0
+*	http://creativecommons.org/licenses/by-nc-sa/3.0/
+*	Modified by Alex Dean 9/13/2016
+*	https://github.com/alexander-g-dean/ESF/tree/master/Code/Chapter_8/Serial-Demo
+***********************************************************************/
+#include "uart.h"
 #include <stdio.h>
 
 Q_T TxQ, RxQ;
 
-/* BEGIN - UART0 Device Driver
-	Code created by Shannon Strutz
-	Date : 5/7/2014
-	Licensed under CC BY-NC-SA 3.0
-	http://creativecommons.org/licenses/by-nc-sa/3.0/
-	Modified by Alex Dean 9/13/2016
-*/
+
 struct __FILE
 {
   int handle;
@@ -122,7 +135,7 @@ uint8_t UART0_Receive_Poll(void) {
 }
 
 // UART0 IRQ Handler. Listing 8.12 on p. 235
-void UART0_IRQHandler(void) {
+/* void UART0_IRQHandler(void) {
 	uint8_t ch;
 
 	if (UART0->S1 & (UART_S1_OR_MASK |UART_S1_NF_MASK |
@@ -153,7 +166,7 @@ void UART0_IRQHandler(void) {
 			UART0->C2 &= ~UART0_C2_TIE_MASK;
 		}
 	}
-}
+} */
 
 void Send_String_Poll(uint8_t * str) {
 	// enqueue string

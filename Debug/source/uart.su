@@ -1,0 +1,9 @@
+stdio.h:157:12:fputc	16	static
+stdio.h:154:12:fgetc	16	static
+uart.c:49:6:Init_UART0	32	static
+uart.c:125:6:UART0_Transmit_Poll	16	static
+uart.c:131:9:UART0_Receive_Poll	8	static
+uart.c:171:6:Send_String_Poll	16	static
+uart.c:178:6:Send_String	24	static
+uart.c:194:10:Rx_Chars_Available	8	static
+uart.c:198:9:Get_Rx_Char	8	static

@@ -46,10 +46,11 @@
 #include "fsl_debug_console.h"
 #include "led_control.h"
 #include "logger.h"
-//#include "Testsuite.h"
 #include "circularbuffer.h"
+#include "uart.h"
+#include "Testsuite.h"
 
-//#define STATUS
+#define UCUNITTEST
 
 const uint8_t RED = 0;
 const uint8_t GREEN = 1;
@@ -83,14 +84,20 @@ int main(void) {
 	log_level = STATUS;
 #endif
 
+	//init UART0
+//	Init_UART0(115200);
     initializeLEDs();
     toggleLED(OFF);
     CIRCBUFF * tx_buffer = (CIRCBUFF *)malloc(20);
-    uint8_t * transmit = (uint8_t *)malloc(4);
+    uint8_t * transmit = (uint8_t *)malloc(256);
+    CIRCBUFF * rx_buffer = (CIRCBUFF *)malloc(20);
+    uint8_t * receive = (uint8_t *)malloc(256);
+
     memset(transmit, 0, 4);
     initCircBuffer(tx_buffer, transmit, 4);
 
-
+//	UART0_Transmit_Poll(72);
+	PRINTF("Help");
 
 
 
@@ -113,6 +120,6 @@ int main(void) {
 #else
     log_a = 1;
 	log_level = TEST;
-    testSuite();
+    Testsuite_RunTests();
 #endif
 }

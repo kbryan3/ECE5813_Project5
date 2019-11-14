@@ -4,29 +4,38 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/System.c \
+../source/Testsuite.c \
 ../source/circularbuffer.c \
 ../source/led_control.c \
 ../source/logger.c \
 ../source/main.c \
 ../source/mtb.c \
+../source/queue.c \
 ../source/semihost_hardfault.c \
 ../source/uart.c 
 
 OBJS += \
+./source/System.o \
+./source/Testsuite.o \
 ./source/circularbuffer.o \
 ./source/led_control.o \
 ./source/logger.o \
 ./source/main.o \
 ./source/mtb.o \
+./source/queue.o \
 ./source/semihost_hardfault.o \
 ./source/uart.o 
 
 C_DEPS += \
+./source/System.d \
+./source/Testsuite.d \
 ./source/circularbuffer.d \
 ./source/led_control.d \
 ./source/logger.d \
 ./source/main.d \
 ./source/mtb.d \
+./source/queue.d \
 ./source/semihost_hardfault.d \
 ./source/uart.d 
 

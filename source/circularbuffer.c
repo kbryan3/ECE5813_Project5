@@ -151,6 +151,7 @@ BUFF_ERROR destroyCircBuffer(CIRCBUFF* buffstruct)
 	}
 	else
 	{
+		free(buffstruct->buffer);
 		free(buffstruct);
 		return BUFFER_PASS;
 	}

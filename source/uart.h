@@ -1,19 +1,28 @@
  /********************************************************************
 *
-* @file circularbuffer.h
-* @brief Interfaces for a circular bugger that holds characters
+* @file uart.h
+* @brief UART driver for FRDM Board
 *
 * @author Kyle Bryan
 * @date November 2019
 * version 1.0
 *
+*  Code is heavily based off of the github code linked to in lecture
+*  information on the source is below:
+*  BEGIN - UART0 Device Driver
+*	Code created by Shannon Strutz
+*	Date : 5/7/2014
+*	Licensed under CC BY-NC-SA 3.0
+*	http://creativecommons.org/licenses/by-nc-sa/3.0/
+*	Modified by Alex Dean 9/13/2016
+*	https://github.com/alexander-g-dean/ESF/tree/master/Code/Chapter_8/Serial-Demo
 ***********************************************************************/
 #ifndef UART_H
 #define UART_H
 
 #include <stdint.h>
 #include <MKL25Z4.H>
-#include "circularbuffer.h"
+#include "queue.h"
 
 // 0 for polled UART communications, 1 for interrupt-driven
 #define USE_UART_INTERRUPTS 	(0)
