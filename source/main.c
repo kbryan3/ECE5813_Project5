@@ -43,7 +43,6 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "MKL25Z4.h"
-#include "fsl_debug_console.h"
 #include "led_control.h"
 #include "logger.h"
 #include "circularbuffer.h"
@@ -71,11 +70,11 @@ int main(void) {
 #ifndef UCUNITTEST
 
 	/* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitBootPeripherals();
+      BOARD_InitBootPins();
+//      BOARD_InitBootClocks();
+      BOARD_InitBootPeripherals();
   	/* Init FSL debug console. */
-    BOARD_InitDebugConsole();
+//    BOARD_InitDebugConsole();
 		//turn logger on and set status
 		log_a = 1;
 #ifdef DEBUGGING
@@ -85,19 +84,27 @@ int main(void) {
 #endif
 
 	//init UART0
-//	Init_UART0(115200);
+	Init_UART0(115200);
     initializeLEDs();
     toggleLED(OFF);
     CIRCBUFF * tx_buffer = (CIRCBUFF *)malloc(20);
     uint8_t * transmit = (uint8_t *)malloc(256);
     CIRCBUFF * rx_buffer = (CIRCBUFF *)malloc(20);
     uint8_t * receive = (uint8_t *)malloc(256);
+    toggleLED(GREEN);
 
     memset(transmit, 0, 4);
     initCircBuffer(tx_buffer, transmit, 4);
-
+    uint8_t c;
 //	UART0_Transmit_Poll(72);
-	PRINTF("Help");
+ 	Send_String_Poll("\n\rHello, World!\n\r");
+
+	// Code listing 8.9, p. 233
+	while (1) {
+		c = UART0_Receive_Poll();
+		add(tx_buffer, 'a');
+		UART0_Transmit_Poll(c+1);
+	}
 
 
 
