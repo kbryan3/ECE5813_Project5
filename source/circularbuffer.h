@@ -79,7 +79,7 @@ BUFF_ERROR add(CIRCBUFF* buffstruct, uint8_t item);
 *
 *@return BUFF_ERROR whether buffer was empty
 */
-BUFF_ERROR removeItem(CIRCBUFF* buffstruct);
+uint8_t removeItem(CIRCBUFF* buffstruct);
 
 /**
 * @brief Checks if buffer is full

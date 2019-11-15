@@ -122,16 +122,23 @@ void Init_UART0(uint32_t baud_rate) {
 */
 
 // Code listing 8.9, p. 233
-void UART0_Transmit_Poll(uint8_t data) {
+void UART0_Transmit_Poll(CIRCBUFF * txbuff) {
 		while (!(UART0->S1 & UART0_S1_TDRE_MASK))
 			;
-		UART0->D = data;
+		if(txbuff->status != EMPTY)
+		{
+			UART0->D = removeItem(txbuff);
+		}
+
+
 }
 
-uint8_t UART0_Receive_Poll(void) {
-		while (!(UART0->S1 & UART0_S1_RDRF_MASK))
+void UART0_Receive_Poll(CIRCBUFF * rxbuff) {
+	uint8_t c;
+	while (!(UART0->S1 & UART0_S1_RDRF_MASK))
 			;
-		return UART0->D;
+		c = UART0->D;
+		add(rxbuff,c);
 }
 
 // UART0 IRQ Handler. Listing 8.12 on p. 235
@@ -190,7 +197,21 @@ void Send_String(uint8_t * str) {
 	}
 }
 
-
+void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
+{
+	if(rxbuff->status != FULL)
+	{
+		UART0_Receive_Poll(rxbuff);
+	}
+	if(rxbuff->status != EMPTY && txbuff->status != FULL)
+	{
+		add(txbuff, removeItem(rxbuff));
+	}
+	if(txbuff->status != EMPTY)
+	{
+		UART0_Transmit_Poll(txbuff);
+	}
+}
 uint32_t Rx_Chars_Available(void) {
 	return Q_Size(&RxQ);
 }

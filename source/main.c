@@ -49,7 +49,8 @@
 #include "uart.h"
 #include "Testsuite.h"
 
-#define UCUNITTEST
+//#define UCUNITTEST
+#define ECHO
 
 const uint8_t RED = 0;
 const uint8_t GREEN = 1;
@@ -84,7 +85,7 @@ int main(void) {
 #endif
 
 	//init UART0
-	Init_UART0(115200);
+	Init_UART0(9600);
     initializeLEDs();
     toggleLED(OFF);
     CIRCBUFF * tx_buffer = (CIRCBUFF *)malloc(20);
@@ -93,17 +94,16 @@ int main(void) {
     uint8_t * receive = (uint8_t *)malloc(256);
     toggleLED(GREEN);
 
-    memset(transmit, 0, 4);
-    initCircBuffer(tx_buffer, transmit, 4);
-    uint8_t c;
-//	UART0_Transmit_Poll(72);
- 	Send_String_Poll("\n\rHello, World!\n\r");
+    initCircBuffer(tx_buffer, transmit, 256);
+    initCircBuffer(rx_buffer, receive, 256);
+    printf("Hello World!");
+// 	Send_String_Poll("\n\rHello, World!\n\r");
 
 	// Code listing 8.9, p. 233
 	while (1) {
-		c = UART0_Receive_Poll();
-		add(tx_buffer, 'a');
-		UART0_Transmit_Poll(c+1);
+#ifdef ECHO
+		echo(tx_buffer, rx_buffer);
+#endif
 	}
 
 

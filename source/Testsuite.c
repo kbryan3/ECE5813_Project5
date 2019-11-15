@@ -71,8 +71,6 @@ void Testsuite_RunTests(void)
   error = removeItem(tx_buffer);
   error = removeItem(tx_buffer);
   UCUNIT_CheckIsEqual(EMPTY, tx_buffer->status);
-  error = removeItem(tx_buffer);
-  UCUNIT_CheckIsEqual(BUFFER_EMPTY, error);
 //check wraparound works
   error = add(tx_buffer, 'b');
   error = add(tx_buffer, 'c');

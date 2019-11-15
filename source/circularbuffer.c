@@ -63,17 +63,18 @@ BUFF_ERROR add(CIRCBUFF* buffstruct, uint8_t item)
 
 }
 
-BUFF_ERROR removeItem(CIRCBUFF* buffstruct)
+uint8_t removeItem(CIRCBUFF* buffstruct)
 {
+	uint8_t c = 0;
 	//check if pointers are not null
 	if(buffIsPointerValid(buffstruct) != BUFFER_PASS)
 	{
-		return BUFFER_INVALID;
+		return c;
 	}
 	//check if buffer is currently empty, if so exit
 	if(buffstruct->status == EMPTY)
 	{
-		return BUFFER_EMPTY;
+		return c;
 	}
 	else
 	{
@@ -83,10 +84,11 @@ BUFF_ERROR removeItem(CIRCBUFF* buffstruct)
 		if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)
 		{
 			buffstruct->status = EMPTY;
-			return BUFFER_PASS;
+			return buffstruct->buffer[buffstruct->tail];
 		}
+		c = buffstruct->buffer[buffstruct->tail];
 		buffstruct->tail= (buffstruct->tail+1) % buffstruct->length;
-		return BUFFER_PASS;
+		return c;
 	}
 }
 

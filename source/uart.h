@@ -23,6 +23,7 @@
 #include <stdint.h>
 #include <MKL25Z4.H>
 #include "queue.h"
+#include "circularbuffer.h"
 
 // 0 for polled UART communications, 1 for interrupt-driven
 #define USE_UART_INTERRUPTS 	(0)
@@ -31,11 +32,13 @@
 #define SYS_CLOCK							(48e6)
 
 void Init_UART0(uint32_t baud_rate);
-void UART0_Transmit_Poll(uint8_t data);
-uint8_t UART0_Receive_Poll(void);
+void UART0_Transmit_Poll(CIRCBUFF * txbuff);
+void UART0_Receive_Poll(CIRCBUFF * rxbuff);
 
 void Send_String_Poll(uint8_t * str);
 void Send_String(uint8_t * str);
+
+void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff);
 
 uint32_t Rx_Chars_Available(void);
 uint8_t	Get_Rx_Char(void);
