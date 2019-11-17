@@ -19,9 +19,9 @@
 
 //ECHO vs APPLICATION
 //---------------------
-//#define ECHO
+#define ECHO
 
 //Interrupt enable
-//#define INTERRUPT
+#define INTERRUPT
 
 #endif /*____DEFINES_H__*/

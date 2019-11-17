@@ -105,7 +105,7 @@ int main(void)
 	// Code listing 8.9, p. 233
 	while (1) {
 #ifdef ECHO
-		echo(tx_buffer, rx_buffer);
+//		echo(tx_buffer, rx_buffer);
 #else  //Application Mode
 		//wait until a non-alpha character is entered
 		while (1)

@@ -91,7 +91,7 @@ void Init_UART0(uint32_t baud_rate) {
 	// Send LSB first, do not invert received data
 	UART0->S2 = UART0_S2_MSBF(0) | UART0_S2_RXINV(0);
 
-#if USE_UART_INTERRUPTS
+#ifdef INTERRUPT
 	// Enable interrupts. Listing 8.11 on p. 234
 	Q_Init(&TxQ);
 	Q_Init(&RxQ);
@@ -150,43 +150,60 @@ uint8_t UART0_Receive(void) {
 }
 
 // UART0 IRQ Handler. Listing 8.12 on p. 235
-/* void UART0_IRQHandler(void) {
+#ifdef INTERRUPT
+void UART0_IRQHandler(void) {
+	__disable_irq();
 	uint8_t ch;
-
+	bool tx_good;
 	if (UART0->S1 & (UART_S1_OR_MASK |UART_S1_NF_MASK |
-		UART_S1_FE_MASK | UART_S1_PF_MASK)) {
+		UART_S1_FE_MASK | UART_S1_PF_MASK))
+	{
 			// clear the error flags
 			UART0->S1 |= UART0_S1_OR_MASK | UART0_S1_NF_MASK |
 									UART0_S1_FE_MASK | UART0_S1_PF_MASK;
 			// read the data register to clear RDRF
-<<<<<<< Updated upstream
-			ch = UART0->D;
-=======
+#ifdef ECHO
 			ch = UART0_Receive();
->>>>>>> Stashed changes
+			tx_good = 1;
+			UART0->C2 |= UART_C2_TIE_MASK;
+#else
+#endif
 	}
 	if (UART0->S1 & UART0_S1_RDRF_MASK) {
 		// received a character
-		ch = UART0->D;
-		if (!Q_Full(&RxQ)) {
-			Q_Enqueue(&RxQ, ch);
-		} else {
-			// error - queue full.
-			// discard character
-		}
+#ifdef ECHO
+			ch = UART0_Receive();
+			tx_good = 1;
+			UART0->C2 |= UART_C2_TIE_MASK;
+#else
+#endif
 	}
 	if ( (UART0->C2 & UART0_C2_TIE_MASK) && // transmitter interrupt enabled
-			(UART0->S1 & UART0_S1_TDRE_MASK) ) { // tx buffer empty
+			(UART0->S1 & UART0_S1_TDRE_MASK) )
+	{ // tx buffer empty
 		// can send another character
-		if (!Q_Empty(&TxQ)) {
+#ifdef ECHO
+		if(tx_good)
+		{
+			tx_good = 0;
+			UART0_Transmit(ch);
+			UART0->C2 &= ~UART0_C2_TIE_MASK;
+
+
+		}
+#else
+/*		if (!Q_Empty(&TxQ)) {
 			UART0->D = Q_Dequeue(&TxQ);
 		} else {
 			// queue is empty so disable transmitter interrupt
 			UART0->C2 &= ~UART0_C2_TIE_MASK;
 		}
+	}*/
+#endif
 	}
-} */
-
+	__enable_irq();
+}
+#endif
 void Send_String_Poll(uint8_t * str) {
 	// enqueue string
 	while (*str != '\0') { // Send characters up to null terminator
