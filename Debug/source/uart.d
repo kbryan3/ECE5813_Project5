@@ -7,7 +7,8 @@ source/uart.o source/uart.d: ../source/uart.c ../source/uart.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h \
- ../utilities/fsl_debug_console.h
+ ../utilities/fsl_debug_console.h ../source/led_control.h \
+ ../source/defines.h
 
 ../source/uart.h:
 
@@ -54,3 +55,7 @@ source/uart.o source/uart.d: ../source/uart.c ../source/uart.h \
 ../board/clock_config.h:
 
 ../utilities/fsl_debug_console.h:
+
+../source/led_control.h:
+
+../source/defines.h:

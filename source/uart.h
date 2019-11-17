@@ -21,9 +21,12 @@
 #define UART_H
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <MKL25Z4.H>
 #include "queue.h"
 #include "circularbuffer.h"
+#include "led_control.h"
+#include "defines.h"
 
 // 0 for polled UART communications, 1 for interrupt-driven
 #define USE_UART_INTERRUPTS 	(0)
@@ -36,6 +39,7 @@ void UART0_Transmit_Poll(CIRCBUFF * txbuff);
 void UART0_Receive_Poll(CIRCBUFF * rxbuff);
 
 void Send_String_Poll(uint8_t * str);
+void UART0_Transmit_Poll_NoBuff(uint8_t c);
 void Send_String(uint8_t * str);
 
 void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff);
@@ -44,6 +48,8 @@ uint32_t Rx_Chars_Available(void);
 uint8_t	Get_Rx_Char(void);
 
 extern Q_T TxQ, RxQ;
+extern uint8_t g_tch, g_rch;
+extern bool g_rx_flag, g_tx_flag;
 
 #endif
 // *ARM University Program Copyright © ARM Ltd 2013****

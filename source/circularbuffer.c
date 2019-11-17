@@ -78,7 +78,6 @@ uint8_t removeItem(CIRCBUFF* buffstruct)
 	}
 	else
 	{
-		PRINTF("%c", buffstruct->buffer[buffstruct->tail]);
 		buffstruct->status = GOOD;
 		//check if buffer pointers are equal before incrementing tail
 		if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)

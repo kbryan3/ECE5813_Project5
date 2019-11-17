@@ -37,6 +37,8 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <ctype.h>
 
 #include "board.h"
 #include "peripherals.h"
@@ -48,9 +50,7 @@
 #include "circularbuffer.h"
 #include "uart.h"
 #include "Testsuite.h"
-
-//#define UCUNITTEST
-#define ECHO
+#include "defines.h"
 
 const uint8_t RED = 0;
 const uint8_t GREEN = 1;
@@ -59,17 +59,18 @@ const uint8_t OFF = 3;
 
 _Bool log_a;
 logger_level log_level;
+uint8_t c;
+bool g_tx_flag, g_rx_flag;
 
-
-
+uint8_t * convert(uint8_t num, uint8_t base);
 
 /*
  * @brief   Application entry point.
  */
-int main(void) {
-	log_level = STATUS;
+int main(void)
+{
+//	log_level = STATUS;
 #ifndef UCUNITTEST
-
 	/* Init board hardware. */
       BOARD_InitBootPins();
 //      BOARD_InitBootClocks();
@@ -81,9 +82,8 @@ int main(void) {
 #ifdef DEBUGGING
 	log_level = DBUG;
 #else
-	log_level = STATUS;
+//	log_level = STATUS;
 #endif
-
 	//init UART0
 	Init_UART0(9600);
     initializeLEDs();
@@ -92,41 +92,94 @@ int main(void) {
     uint8_t * transmit = (uint8_t *)malloc(256);
     CIRCBUFF * rx_buffer = (CIRCBUFF *)malloc(20);
     uint8_t * receive = (uint8_t *)malloc(256);
+#ifndef ECHO
+    uint8_t * application = (uint8_t *)calloc(128, sizeof(uint8_t)); //ascii values
+    uint8_t ch;
+    g_rx_flag = 0;
+    g_tx_flag = 0;
+#endif
     toggleLED(GREEN);
 
     initCircBuffer(tx_buffer, transmit, 256);
     initCircBuffer(rx_buffer, receive, 256);
-    printf("Hello World!");
-// 	Send_String_Poll("\n\rHello, World!\n\r");
-
 	// Code listing 8.9, p. 233
 	while (1) {
 #ifdef ECHO
 		echo(tx_buffer, rx_buffer);
+#else  //Application Mode
+		//wait until a non-alpha character is entered
+		while (1)
+		{
+			ch = UART0_Receive();
+			add(rx_buffer, ch);
+			if(!(isalpha(rx_buffer->buffer[rx_buffer->head - 1])))
+			{
+				break;
+			}
+		}
+		//total up character values
+		while(rx_buffer->status != EMPTY)
+		{
+			c = removeItem(rx_buffer);
+			application[c]++;
+		}
+		//transfer upper case to tx_buffer
+		for(uint8_t i = 65; i<91; i++)
+		{
+			add(tx_buffer, i);
+			add(tx_buffer,  (uint8_t)45);
+			add(tx_buffer, *convert(application[i],10));
+			add(tx_buffer, (uint8_t)59);
+		}
+		//transfer lower case to tx_buffer
+		for(uint8_t i = 97; i<123; i++)
+		{
+			add(tx_buffer, i);
+			add(tx_buffer,  (uint8_t)45);
+			add(tx_buffer, *convert(application[i],10));
+			add(tx_buffer, (uint8_t)59);
+		}
+		//print out results
+		while(tx_buffer->status != EMPTY)
+		{
+			UART0_Transmit(removeItem(tx_buffer));
+		}
 #endif
 	}
+/*	while (1)
+	{
+		if(rx_flag == 1)
+		if (tx_buffer->status != EMPTY)
+		{
+			UART0->C2 |= UART0_C2_TIE(1);
+		}
+		if(rx_buffer->status != EMPTY && tx_buffer->status != FULL)
+		{
+			add(tx_buffer, removeItem(rx_buffer));
+		}
+	}*/
 
-
-
-    /* Enter an infinite loop*/
-    while(1)
-    {
-    	add(tx_buffer, 'a');
-    	add(tx_buffer, 'b');
-    	add(tx_buffer, 'c');
-    	add(tx_buffer, 'd');
-    	add(tx_buffer, 'e');
-    	removeItem(tx_buffer);
-    	removeItem(tx_buffer);
-       	removeItem(tx_buffer);
-        removeItem(tx_buffer);
-        removeItem(tx_buffer);
-
-    }
-    return 0;
 #else
     log_a = 1;
 	log_level = TEST;
     Testsuite_RunTests();
 #endif
+}
+
+uint8_t * convert(uint8_t num, uint8_t base)
+{
+	static char Representation[]= "0123456789ABCDEF";
+	static char buffer[50];
+	char *ptr;
+
+	ptr = &buffer[49];
+	*ptr = '\0';
+
+	do
+	{
+		*--ptr = Representation[num%base];
+		num /= base;
+	}while(num != 0);
+
+	return(ptr);
 }

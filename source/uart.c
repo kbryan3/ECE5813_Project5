@@ -122,23 +122,31 @@ void Init_UART0(uint32_t baud_rate) {
 */
 
 // Code listing 8.9, p. 233
-void UART0_Transmit_Poll(CIRCBUFF * txbuff) {
-		while (!(UART0->S1 & UART0_S1_TDRE_MASK))
+void UART0_Transmit(uint8_t c)
+{
+	toggleLED(1);
+#ifndef INTERRUPT
+	while (!(UART0->S1 & UART0_S1_TDRE_MASK))
 			;
-		if(txbuff->status != EMPTY)
-		{
-			UART0->D = removeItem(txbuff);
-		}
-
-
+#endif
+			UART0->D = c;
 }
 
-void UART0_Receive_Poll(CIRCBUFF * rxbuff) {
-	uint8_t c;
-	while (!(UART0->S1 & UART0_S1_RDRF_MASK))
+void UART0_Transmit_Poll_NoBuff(uint8_t c) {
+	while (!(UART0->S1 & UART0_S1_TDRE_MASK))
 			;
+	UART0->D = c;
+}
+
+uint8_t UART0_Receive(void) {
+	uint8_t c;
+	toggleLED(2);
+#ifndef INTERRUPT
+	while (!(UART0->S1 & UART0_S1_RDRF_MASK))
+		;
+#endif
 		c = UART0->D;
-		add(rxbuff,c);
+		return c;
 }
 
 // UART0 IRQ Handler. Listing 8.12 on p. 235
@@ -151,7 +159,11 @@ void UART0_Receive_Poll(CIRCBUFF * rxbuff) {
 			UART0->S1 |= UART0_S1_OR_MASK | UART0_S1_NF_MASK |
 									UART0_S1_FE_MASK | UART0_S1_PF_MASK;
 			// read the data register to clear RDRF
+<<<<<<< Updated upstream
 			ch = UART0->D;
+=======
+			ch = UART0_Receive();
+>>>>>>> Stashed changes
 	}
 	if (UART0->S1 & UART0_S1_RDRF_MASK) {
 		// received a character
@@ -178,7 +190,7 @@ void UART0_Receive_Poll(CIRCBUFF * rxbuff) {
 void Send_String_Poll(uint8_t * str) {
 	// enqueue string
 	while (*str != '\0') { // Send characters up to null terminator
-		UART0_Transmit_Poll(*str++);
+		UART0_Transmit(*str++);
 	}
 }
 
@@ -199,18 +211,24 @@ void Send_String(uint8_t * str) {
 
 void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
 {
+
+	uint8_t c;
 	if(rxbuff->status != FULL)
 	{
-		UART0_Receive_Poll(rxbuff);
+		c = UART0_Receive();
+		add(rxbuff, c);
 	}
 	if(rxbuff->status != EMPTY && txbuff->status != FULL)
 	{
-		add(txbuff, removeItem(rxbuff));
+		c = removeItem(rxbuff);
+		add(txbuff, c);
 	}
 	if(txbuff->status != EMPTY)
 	{
-		UART0_Transmit_Poll(txbuff);
+		c = removeItem(txbuff);
+		UART0_Transmit(c);
 	}
+
 }
 uint32_t Rx_Chars_Available(void) {
 	return Q_Size(&RxQ);

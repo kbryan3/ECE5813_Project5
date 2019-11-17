@@ -6,7 +6,9 @@ source/logger.o source/logger.d: ../source/logger.c ../board/board.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
- ../utilities/fsl_debug_console.h ../source/logger.h
+ ../utilities/fsl_debug_console.h ../source/logger.h ../source/uart.h \
+ ../CMSIS/MKL25Z4.H ../source/queue.h ../source/circularbuffer.h \
+ ../source/led_control.h ../source/defines.h
 
 ../board/board.h:
 
@@ -47,3 +49,15 @@ source/logger.o source/logger.d: ../source/logger.c ../board/board.h \
 ../utilities/fsl_debug_console.h:
 
 ../source/logger.h:
+
+../source/uart.h:
+
+../CMSIS/MKL25Z4.H:
+
+../source/queue.h:
+
+../source/circularbuffer.h:
+
+../source/led_control.h:
+
+../source/defines.h:

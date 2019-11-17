@@ -24,6 +24,7 @@
 #include "fsl_debug_console.h"
 #endif
 #include "logger.h"
+#include "uart.h"
 
 void log_enable()
 {
@@ -82,15 +83,16 @@ void log_string(uint8_t * str, logger_level level, function_called func)
 {
 	if(!str)
 	{
-		PRINTF("Null Pointer!");
+		Send_String_Poll("Null Pointer!");
 	}
 	if(log_level==level)
 	{
 #ifndef PC
 		printLevel(level);
 		printFunction(func);
-		PRINTF("%s", str);
-		PRINTF("\n\r");
+		//Send_String_Poll("%s", str);
+		Send_String_Poll(str);
+		Send_String_Poll("\n\r");
 #else
 		printf("%s", str);
 		printf("\n");
@@ -140,15 +142,15 @@ void printLevel(logger_level level)
 {
 	if(level == TEST)
 	{
-		PRINTF("TEST: ");
+		Send_String_Poll("TEST: ");
 	}
 	else if(level == DBUG)
 	{
-		PRINTF("DBUG: ");
+		Send_String_Poll("DBUG: ");
 	}
 	else
 	{
-		PRINTF("STATUS: ");
+		Send_String_Poll("STATUS: ");
 	}
 }
 
@@ -156,51 +158,51 @@ void printFunction(function_called func)
 {
 	if(func == TOGGLELED)
 	{
-		PRINTF("toggleLED(): ");
+		Send_String_Poll("toggleLED(): ");
 	}
 	else if(func == SETALERTLOW)
 	{
-		PRINTF("setAlertLow: ");
+		Send_String_Poll("setAlertLow: ");
 	}
 	else if(func == PRINTTEMPERATURE)
 	{
-		PRINTF("printTemperature: ");
+		Send_String_Poll("printTemperature: ");
 	}
 	else if(func == PRINTAVERAGETEMPERATURE)
 	{
-		PRINTF("printAverageTemperature(): ");
+		Send_String_Poll("printAverageTemperature(): ");
 	}
 	else if(func == GETTEMPERATURE)
 	{
-		PRINTF("getTemperature(): ");
+		Send_String_Poll("getTemperature(): ");
 	}
 	else if(func == TEST_POINTERS)//Test pointers() called
 	{
-		PRINTF("testPointers(): ");
+		Send_String_Poll("testPointers(): ");
 	}
 	else if(func == SYSTEMSHUTDOWN)
 	{
-		PRINTF("systemShutdown(): ");
+		Send_String_Poll("systemShutdown(): ");
 	}
 	else if(func == TESTSUITE)
 	{
-		PRINTF("testSuite(): ");
+		Send_String_Poll("testSuite(): ");
 	}
 	else if(func == RUNBIT)
 	{
-		PRINTF("runBIT(): ");
+		Send_String_Poll("runBIT(): ");
 	}
 	else if(func == STATESTATEMACHINE)
 	{
-		PRINTF("stateStateMachine(): ");
+		Send_String_Poll("stateStateMachine(): ");
 	}
 	else if(func == STATETABLEMACHINE)
 	{
-		PRINTF("stateTableMachine(): ");
+		Send_String_Poll("stateTableMachine(): ");
 	}
 	else if(func == TEST_BASICCHECKS)
 	{
-		PRINTF("Test_BasicChecks: ");
+		Send_String_Poll("Test_BasicChecks: ");
 	}
 
 }
