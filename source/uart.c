@@ -20,8 +20,6 @@
 #include "uart.h"
 #include <stdio.h>
 
-Q_T TxQ, RxQ;
-
 
 struct __FILE
 {
@@ -93,9 +91,6 @@ void Init_UART0(uint32_t baud_rate) {
 
 #ifdef INTERRUPT
 	// Enable interrupts. Listing 8.11 on p. 234
-	Q_Init(&TxQ);
-	Q_Init(&RxQ);
-
 	NVIC_SetPriority(UART0_IRQn, 2); // 0, 1, 2, or 3
 	NVIC_ClearPendingIRQ(UART0_IRQn);
 	NVIC_EnableIRQ(UART0_IRQn);
@@ -211,7 +206,7 @@ void Send_String_Poll(uint8_t * str) {
 	}
 }
 
-void Send_String(uint8_t * str) {
+/*void Send_String(uint8_t * str) {
 	// enqueue string
 	while (*str != '\0') { // copy characters up to null terminator
 		while (Q_Full(&TxQ))
@@ -224,7 +219,7 @@ void Send_String(uint8_t * str) {
 		UART0->D = Q_Dequeue(&TxQ);
 		UART0->C2 |= UART0_C2_TIE(1);
 	}
-}
+}*/
 
 void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
 {
@@ -247,13 +242,23 @@ void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
 	}
 
 }
-uint32_t Rx_Chars_Available(void) {
-	return Q_Size(&RxQ);
-}
 
-uint8_t	Get_Rx_Char(void) {
-	return Q_Dequeue(&RxQ);
-}
+uint8_t * convert(uint8_t num, uint8_t base)
+{
+	static char Representation[]= "0123456789ABCDEF";
+	static char buffer[50];
+	char *ptr;
 
+	ptr = &buffer[49];
+	*ptr = '\0';
+
+	do
+	{
+		*--ptr = Representation[num%base];
+		num /= base;
+	}while(num != 0);
+
+	return(ptr);
+}
 
 // ****ARM University Program Copyright © ARM Ltd 2013*******

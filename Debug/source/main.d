@@ -8,8 +8,8 @@ source/main.o source/main.d: ../source/main.c ../board/board.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../source/led_control.h ../source/logger.h ../source/circularbuffer.h \
  ../utilities/fsl_debug_console.h ../source/uart.h ../CMSIS/MKL25Z4.H \
- ../source/queue.h ../source/defines.h ../source/Testsuite.h \
- ../source/System.h ../source/uCUnit-v1.0.h
+ ../source/defines.h ../source/Testsuite.h ../source/System.h \
+ ../source/uCUnit-v1.0.h
 
 ../board/board.h:
 
@@ -58,8 +58,6 @@ source/main.o source/main.d: ../source/main.c ../board/board.h \
 ../source/uart.h:
 
 ../CMSIS/MKL25Z4.H:
-
-../source/queue.h:
 
 ../source/defines.h:
 

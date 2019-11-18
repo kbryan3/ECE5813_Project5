@@ -23,7 +23,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <MKL25Z4.H>
-#include "queue.h"
 #include "circularbuffer.h"
 #include "led_control.h"
 #include "defines.h"
@@ -44,12 +43,9 @@ void Send_String(uint8_t * str);
 
 void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff);
 
-uint32_t Rx_Chars_Available(void);
-uint8_t	Get_Rx_Char(void);
+uint8_t * convert(uint8_t num, uint8_t base);
 
-extern Q_T TxQ, RxQ;
-extern uint8_t g_tch, g_rch;
-extern bool g_rx_flag, g_tx_flag;
+extern uint8_t app[128];
 
 #endif
 // *ARM University Program Copyright © ARM Ltd 2013****

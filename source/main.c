@@ -60,9 +60,7 @@ const uint8_t OFF = 3;
 _Bool log_a;
 logger_level log_level;
 uint8_t c;
-bool g_tx_flag, g_rx_flag;
-
-uint8_t * convert(uint8_t num, uint8_t base);
+uint8_t app[128];
 
 /*
  * @brief   Application entry point.
@@ -93,10 +91,8 @@ int main(void)
     CIRCBUFF * rx_buffer = (CIRCBUFF *)malloc(20);
     uint8_t * receive = (uint8_t *)malloc(256);
 #ifndef ECHO
-    uint8_t * application = (uint8_t *)calloc(128, sizeof(uint8_t)); //ascii values
+    memset(app, 0, 128); //ascii values
     uint8_t ch;
-    g_rx_flag = 0;
-    g_tx_flag = 0;
 #endif
     toggleLED(GREEN);
 
@@ -105,7 +101,11 @@ int main(void)
 	// Code listing 8.9, p. 233
 	while (1) {
 #ifdef ECHO
-//		echo(tx_buffer, rx_buffer);
+#ifndef INTERRUPT
+		echo(tx_buffer, rx_buffer);
+#else
+
+#endif
 #else  //Application Mode
 		//wait until a non-alpha character is entered
 		while (1)
@@ -121,14 +121,14 @@ int main(void)
 		while(rx_buffer->status != EMPTY)
 		{
 			c = removeItem(rx_buffer);
-			application[c]++;
+			app[c]++;
 		}
 		//transfer upper case to tx_buffer
 		for(uint8_t i = 65; i<91; i++)
 		{
 			add(tx_buffer, i);
 			add(tx_buffer,  (uint8_t)45);
-			add(tx_buffer, *convert(application[i],10));
+			add(tx_buffer, *convert(app[i],10));
 			add(tx_buffer, (uint8_t)59);
 		}
 		//transfer lower case to tx_buffer
@@ -136,7 +136,7 @@ int main(void)
 		{
 			add(tx_buffer, i);
 			add(tx_buffer,  (uint8_t)45);
-			add(tx_buffer, *convert(application[i],10));
+			add(tx_buffer, *convert(app[i],10));
 			add(tx_buffer, (uint8_t)59);
 		}
 		//print out results
@@ -146,18 +146,6 @@ int main(void)
 		}
 #endif
 	}
-/*	while (1)
-	{
-		if(rx_flag == 1)
-		if (tx_buffer->status != EMPTY)
-		{
-			UART0->C2 |= UART0_C2_TIE(1);
-		}
-		if(rx_buffer->status != EMPTY && tx_buffer->status != FULL)
-		{
-			add(tx_buffer, removeItem(rx_buffer));
-		}
-	}*/
 
 #else
     log_a = 1;
@@ -166,20 +154,4 @@ int main(void)
 #endif
 }
 
-uint8_t * convert(uint8_t num, uint8_t base)
-{
-	static char Representation[]= "0123456789ABCDEF";
-	static char buffer[50];
-	char *ptr;
 
-	ptr = &buffer[49];
-	*ptr = '\0';
-
-	do
-	{
-		*--ptr = Representation[num%base];
-		num /= base;
-	}while(num != 0);
-
-	return(ptr);
-}
