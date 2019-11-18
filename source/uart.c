@@ -133,7 +133,7 @@ void UART0_Transmit_Poll_NoBuff(uint8_t c) {
 	UART0->D = c;
 }
 
-uint8_t UART0_Receive(void) {
+uint8_t UART0_Receive() {
 	uint8_t c;
 	toggleLED(2);
 #ifndef INTERRUPT
@@ -245,9 +245,9 @@ void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
 
 uint8_t * convert(uint8_t num, uint8_t base)
 {
-	static char Representation[]= "0123456789ABCDEF";
-	static char buffer[50];
-	char *ptr;
+	static uint8_t Representation[]= "0123456789ABCDEF";
+	static uint8_t buffer[50];
+	uint8_t *ptr;
 
 	ptr = &buffer[49];
 	*ptr = '\0';

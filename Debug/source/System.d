@@ -7,7 +7,8 @@ source/System.o source/System.d: ../source/System.c ../source/System.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../utilities/fsl_debug_console.h ../source/led_control.h \
- ../source/logger.h
+ ../source/logger.h ../source/uart.h ../CMSIS/MKL25Z4.H \
+ ../source/circularbuffer.h ../source/defines.h
 
 ../source/System.h:
 
@@ -52,3 +53,11 @@ source/System.o source/System.d: ../source/System.c ../source/System.h \
 ../source/led_control.h:
 
 ../source/logger.h:
+
+../source/uart.h:
+
+../CMSIS/MKL25Z4.H:
+
+../source/circularbuffer.h:
+
+../source/defines.h:

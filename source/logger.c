@@ -26,6 +26,21 @@
 #include "logger.h"
 #include "uart.h"
 
+void Init_SysTick(void)
+{
+	SysTick->LOAD = (4800000L/100);
+	NVIC_SetPriority(SysTick_IRQn, 3);
+	SysTick->VAL = 0;
+	SysTick->CTRL = SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
+}
+
+void SysTick_Handler(void)
+{
+	__disable_irq();
+	g_ticks++;
+	__enable_irq();
+
+}
 void log_enable()
 {
 	log_a = 1;
@@ -83,7 +98,7 @@ void log_string(uint8_t * str, logger_level level, function_called func)
 {
 	if(!str)
 	{
-		Send_String_Poll("Null Pointer!");
+		Send_String_Poll((uint8_t *)"Null Pointer!");
 	}
 	if(log_level==level)
 	{
@@ -92,7 +107,7 @@ void log_string(uint8_t * str, logger_level level, function_called func)
 		printFunction(func);
 		//Send_String_Poll("%s", str);
 		Send_String_Poll(str);
-		Send_String_Poll("\n\r");
+		Send_String_Poll((uint8_t *)"\n\r");
 #else
 		printf("%s", str);
 		printf("\n");
@@ -138,19 +153,31 @@ void log_int(uint32_t * integer, logger_level level, function_called func)
 	}
 }
 
+void log_time()
+{
+	uint32_t ticks = g_ticks;
+	uint32_t hours = 36000 / ticks;
+	ticks = ticks - 36000 * hours;
+	uint32_t minutes = ticks / 600;
+	ticks = ticks - 600 * minutes;
+	uint32_t seconds = ticks / 10;
+	ticks = ticks - 10 * seconds;
+
+}
+
 void printLevel(logger_level level)
 {
 	if(level == TEST)
 	{
-		Send_String_Poll("TEST: ");
+		Send_String_Poll((uint8_t *)"TEST: ");
 	}
 	else if(level == DBUG)
 	{
-		Send_String_Poll("DBUG: ");
+		Send_String_Poll((uint8_t *)"DBUG: ");
 	}
 	else
 	{
-		Send_String_Poll("STATUS: ");
+		Send_String_Poll((uint8_t *)"STATUS: ");
 	}
 }
 
@@ -158,51 +185,51 @@ void printFunction(function_called func)
 {
 	if(func == TOGGLELED)
 	{
-		Send_String_Poll("toggleLED(): ");
+		Send_String_Poll((uint8_t *)"toggleLED(): ");
 	}
 	else if(func == SETALERTLOW)
 	{
-		Send_String_Poll("setAlertLow: ");
+		Send_String_Poll((uint8_t *)"setAlertLow: ");
 	}
 	else if(func == PRINTTEMPERATURE)
 	{
-		Send_String_Poll("printTemperature: ");
+		Send_String_Poll((uint8_t *)"printTemperature: ");
 	}
 	else if(func == PRINTAVERAGETEMPERATURE)
 	{
-		Send_String_Poll("printAverageTemperature(): ");
+		Send_String_Poll((uint8_t *)"printAverageTemperature(): ");
 	}
 	else if(func == GETTEMPERATURE)
 	{
-		Send_String_Poll("getTemperature(): ");
+		Send_String_Poll((uint8_t *)"getTemperature(): ");
 	}
 	else if(func == TEST_POINTERS)//Test pointers() called
 	{
-		Send_String_Poll("testPointers(): ");
+		Send_String_Poll((uint8_t *)"testPointers(): ");
 	}
 	else if(func == SYSTEMSHUTDOWN)
 	{
-		Send_String_Poll("systemShutdown(): ");
+		Send_String_Poll((uint8_t *)"systemShutdown(): ");
 	}
 	else if(func == TESTSUITE)
 	{
-		Send_String_Poll("testSuite(): ");
+		Send_String_Poll((uint8_t *)"testSuite(): ");
 	}
 	else if(func == RUNBIT)
 	{
-		Send_String_Poll("runBIT(): ");
+		Send_String_Poll((uint8_t *)"runBIT(): ");
 	}
 	else if(func == STATESTATEMACHINE)
 	{
-		Send_String_Poll("stateStateMachine(): ");
+		Send_String_Poll((uint8_t *)"stateStateMachine(): ");
 	}
 	else if(func == STATETABLEMACHINE)
 	{
-		Send_String_Poll("stateTableMachine(): ");
+		Send_String_Poll((uint8_t *)"stateTableMachine(): ");
 	}
 	else if(func == TEST_BASICCHECKS)
 	{
-		Send_String_Poll("Test_BasicChecks: ");
+		Send_String_Poll((uint8_t *)"Test_BasicChecks: ");
 	}
 
 }

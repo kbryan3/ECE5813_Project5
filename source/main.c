@@ -49,7 +49,9 @@
 #include "logger.h"
 #include "circularbuffer.h"
 #include "uart.h"
+#ifdef 	 UCUNITTEST
 #include "Testsuite.h"
+#endif
 #include "defines.h"
 
 const uint8_t RED = 0;
@@ -62,13 +64,15 @@ logger_level log_level;
 uint8_t c;
 uint8_t app[128];
 uint8_t *p;
+uint32_t g_ticks;
 
 /*
  * @brief   Application entry point.
  */
 int main(void)
 {
-//	log_level = STATUS;
+	log_level = 2;
+	g_ticks = 0;
 #ifndef UCUNITTEST
 	/* Init board hardware. */
       BOARD_InitBootPins();
@@ -81,8 +85,9 @@ int main(void)
 #ifdef DEBUGGING
 	log_level = DBUG;
 #else
-//	log_level = STATUS;
+	log_level = 2;
 #endif
+	Init_SysTick();
 	//init UART0
 	Init_UART0(9600);
     initializeLEDs();

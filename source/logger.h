@@ -21,6 +21,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "uart.h"
+
 typedef enum logger_status
 {
 	DISABLED,    //logger is off
@@ -54,7 +56,16 @@ typedef enum function_called
 
 extern _Bool log_a;
 extern logger_level log_level;
+extern uint32_t g_ticks;
 
+/**
+* @brief Enables SysTick
+*
+* When called the systick is enabled
+*
+*@return void
+*/
+void Init_SysTick(void);
 
 /**
 * @brief Enables logger

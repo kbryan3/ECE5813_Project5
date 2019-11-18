@@ -34,8 +34,8 @@
 #define SYS_CLOCK							(48e6)
 
 void Init_UART0(uint32_t baud_rate);
-void UART0_Transmit_Poll(CIRCBUFF * txbuff);
-void UART0_Receive_Poll(CIRCBUFF * rxbuff);
+void UART0_Transmit(uint8_t c);
+uint8_t UART0_Receive();
 
 void Send_String_Poll(uint8_t * str);
 void UART0_Transmit_Poll_NoBuff(uint8_t c);

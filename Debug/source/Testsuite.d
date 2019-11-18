@@ -8,7 +8,8 @@ source/Testsuite.o source/Testsuite.d: ../source/Testsuite.c \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../utilities/fsl_debug_console.h ../source/led_control.h \
- ../source/logger.h ../source/circularbuffer.h
+ ../source/logger.h ../source/uart.h ../CMSIS/MKL25Z4.H \
+ ../source/circularbuffer.h ../source/defines.h
 
 ../source/System.h:
 
@@ -58,4 +59,10 @@ source/Testsuite.o source/Testsuite.d: ../source/Testsuite.c \
 
 ../source/logger.h:
 
+../source/uart.h:
+
+../CMSIS/MKL25Z4.H:
+
 ../source/circularbuffer.h:
+
+../source/defines.h:
