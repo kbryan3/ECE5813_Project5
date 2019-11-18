@@ -61,6 +61,7 @@ _Bool log_a;
 logger_level log_level;
 uint8_t c;
 uint8_t app[128];
+uint8_t *p;
 
 /*
  * @brief   Application entry point.
@@ -128,7 +129,11 @@ int main(void)
 		{
 			add(tx_buffer, i);
 			add(tx_buffer,  (uint8_t)45);
-			add(tx_buffer, *convert(app[i],10));
+			//print up to two digits of data
+			p = convert(app[i], 10);
+			add(tx_buffer, *p);
+			p++;
+			add(tx_buffer, *p);
 			add(tx_buffer, (uint8_t)59);
 		}
 		//transfer lower case to tx_buffer
@@ -136,7 +141,11 @@ int main(void)
 		{
 			add(tx_buffer, i);
 			add(tx_buffer,  (uint8_t)45);
-			add(tx_buffer, *convert(app[i],10));
+			//print up to two digits of data
+			p = convert(app[i], 10);
+			add(tx_buffer, *p);
+			p++;
+			add(tx_buffer, *p);
 			add(tx_buffer, (uint8_t)59);
 		}
 		//print out results
