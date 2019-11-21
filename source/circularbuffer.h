@@ -50,7 +50,8 @@ typedef struct
 
 }CIRCBUFF;
 
-
+#define START_CRITICAL() (__disable_irq())
+#define END_CRITICAL()   (__enable_irq())
 
 /**
 * @brief Initializes a circular buffer given a pointer and length in bytes

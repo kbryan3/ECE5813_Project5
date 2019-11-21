@@ -54,6 +54,7 @@ BUFF_ERROR add(CIRCBUFF* buffstruct, uint8_t item)
 		buffstruct->buffer[buffstruct->head] = item; //add item to buffer
 		buffstruct->status = GOOD;
 		log_string((uint8_t*)"ADDING TO BUFFER: ", DBUG, ADD);
+		START_CRITICAL();
 		//check if buffer is full and set status if so and do not increment
 		if(buffIsFull(buffstruct) == BUFFER_FULL)
 		{
@@ -61,6 +62,7 @@ BUFF_ERROR add(CIRCBUFF* buffstruct, uint8_t item)
 			return BUFFER_PASS;
 		}
 		buffstruct->head = (buffstruct->head + 1) % buffstruct->length; //move head
+		END_CRITICAL();
 		return BUFFER_PASS;
 	}
 
@@ -92,11 +94,13 @@ uint8_t removeItem(CIRCBUFF* buffstruct)
 			return buffstruct->buffer[buffstruct->tail];
 		}
 		c = buffstruct->buffer[buffstruct->tail];
+		START_CRITICAL();
 		buffstruct->tail= (buffstruct->tail+1) % buffstruct->length;
 		if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)
 		{
 			buffstruct->status = EMPTY;
 		}
+		END_CRITICAL();
 		return c;
 	}
 }
