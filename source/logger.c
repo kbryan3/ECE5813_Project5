@@ -107,6 +107,7 @@ void log_string(uint8_t * str, logger_level level, function_called func)
 		printFunction(func);
 		//Send_String_Poll("%s", str);
 		Send_String_Poll(str);
+		log_time();
 		Send_String_Poll((uint8_t *)"\n\r");
 #else
 		printf("%s", str);
@@ -155,13 +156,27 @@ void log_int(uint32_t * integer, logger_level level, function_called func)
 
 void log_time()
 {
+	uint8_t *p;
 	uint32_t ticks = g_ticks;
-	uint32_t hours = 36000 / ticks;
+	uint32_t hours = ticks / 36000;
 	ticks = ticks - 36000 * hours;
 	uint32_t minutes = ticks / 600;
 	ticks = ticks - 600 * minutes;
 	uint32_t seconds = ticks / 10;
 	ticks = ticks - 10 * seconds;
+	p = convert(hours, 10);
+	Send_String_Poll(p);
+	Send_String_Poll((uint8_t *)":");
+	p = convert(minutes, 10);
+	Send_String_Poll(p);
+	Send_String_Poll((uint8_t *)":");
+	p = convert(seconds, 10);
+	Send_String_Poll(p);
+	Send_String_Poll((uint8_t *)":");
+	p = convert(ticks, 10);
+	Send_String_Poll(p);
+
+
 
 }
 
@@ -231,5 +246,39 @@ void printFunction(function_called func)
 	{
 		Send_String_Poll((uint8_t *)"Test_BasicChecks: ");
 	}
+	else if(func == REMOVEITEM)
+	{
+		Send_String_Poll((uint8_t *)"removeItem: ");
+	}
+	else if(func == ADD)
+	{
+		Send_String_Poll((uint8_t *)"add: ");
+	}
+	else if(func == UART0_TRANSMIT)
+	{
+		Send_String_Poll((uint8_t *)"UART0_Transmit: ");
+	}
+	else if(func == UART0_RECEIVE)
+	{
+		Send_String_Poll((uint8_t *)"UART0_Receive: ");
+	}
+}
 
+//code comes from http://www.firmcodes.com/write-printf-function-c/
+uint8_t * convert(uint8_t num, uint8_t base)
+{
+	static uint8_t Representation[]= "0123456789ABCDEF";
+	static uint8_t buffer[50];
+	uint8_t *ptr;
+
+	ptr = &buffer[49];
+	*ptr = '\0';
+
+	do
+	{
+		*--ptr = Representation[num%base];
+		num /= base;
+	}while(num != 0);
+
+	return(ptr);
 }

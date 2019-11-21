@@ -13,8 +13,8 @@
 
 //Log Type Options:
 //--------------------
-#define UCUNITTEST //(must set terminal to 115200)
-//#define DEBUGGING
+//#define UCUNITTEST //(must set terminal to 115200)
+#define DEBUGGING
 //#define STATUS
 
 //ECHO vs APPLICATION
@@ -22,6 +22,6 @@
 #define ECHO
 
 //Interrupt enable
-#define INTERRUPT
+//#define INTERRUPT
 
 #endif /*____DEFINES_H__*/

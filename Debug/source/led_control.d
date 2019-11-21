@@ -5,9 +5,8 @@ source/led_control.o source/led_control.d: ../source/led_control.c \
  ../CMSIS/cmsis_gcc.h ../CMSIS/core_cmFunc.h ../CMSIS/system_MKL25Z4.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../source/logger.h \
- ../source/uart.h ../CMSIS/MKL25Z4.H ../source/circularbuffer.h \
  ../board/peripherals.h ../board/pin_mux.h ../board/clock_config.h \
- ../CMSIS/MKL25Z4.h ../utilities/fsl_debug_console.h ../source/defines.h
+ ../CMSIS/MKL25Z4.h ../utilities/fsl_debug_console.h
 
 ../source/led_control.h:
 
@@ -41,12 +40,6 @@ source/led_control.o source/led_control.d: ../source/led_control.c \
 
 ../source/logger.h:
 
-../source/uart.h:
-
-../CMSIS/MKL25Z4.H:
-
-../source/circularbuffer.h:
-
 ../board/peripherals.h:
 
 ../board/pin_mux.h:
@@ -56,5 +49,3 @@ source/led_control.o source/led_control.d: ../source/led_control.c \
 ../CMSIS/MKL25Z4.h:
 
 ../utilities/fsl_debug_console.h:
-
-../source/defines.h:

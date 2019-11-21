@@ -124,7 +124,9 @@ void UART0_Transmit(uint8_t c)
 	while (!(UART0->S1 & UART0_S1_TDRE_MASK))
 			;
 #endif
-			UART0->D = c;
+
+		UART0->D = c;
+		log_string((uint8_t*)"Transmitted Data: ", DBUG, UART0_TRANSMIT);
 }
 
 void UART0_Transmit_Poll_NoBuff(uint8_t c) {
@@ -136,6 +138,7 @@ void UART0_Transmit_Poll_NoBuff(uint8_t c) {
 uint8_t UART0_Receive() {
 	uint8_t c;
 	toggleLED(2);
+	log_string((uint8_t*)"Receiving: ", DBUG, UART0_RECEIVE);
 #ifndef INTERRUPT
 	while (!(UART0->S1 & UART0_S1_RDRF_MASK))
 		;
@@ -201,8 +204,16 @@ void UART0_IRQHandler(void) {
 #endif
 void Send_String_Poll(uint8_t * str) {
 	// enqueue string
+//	uint32_t state = UART0->C2 & UART0_C2_TIE_MASK;
+//	uint32_t state2 = UART0->C2 & UART0_C2_RIE_MASK;
+	UART0->C2 &= ~UART0_C2_TIE_MASK;
+	UART0->C2 &= ~UART0_C2_RIE_MASK;
 	while (*str != '\0') { // Send characters up to null terminator
-		UART0_Transmit(*str++);
+		//UART0_Transmit(*str++);
+		toggleLED(1);
+		while (!(UART0->S1 & UART0_S1_TDRE_MASK))
+					;
+		UART0->D = *str++;
 	}
 }
 
@@ -243,22 +254,6 @@ void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
 
 }
 
-uint8_t * convert(uint8_t num, uint8_t base)
-{
-	static uint8_t Representation[]= "0123456789ABCDEF";
-	static uint8_t buffer[50];
-	uint8_t *ptr;
 
-	ptr = &buffer[49];
-	*ptr = '\0';
-
-	do
-	{
-		*--ptr = Representation[num%base];
-		num /= base;
-	}while(num != 0);
-
-	return(ptr);
-}
 
 // ****ARM University Program Copyright © ARM Ltd 2013*******

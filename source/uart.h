@@ -22,10 +22,11 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <MKL25Z4.H>
+#include <MKL25Z4.h>
 #include "circularbuffer.h"
 #include "led_control.h"
 #include "defines.h"
+#include "logger.h"
 
 // 0 for polled UART communications, 1 for interrupt-driven
 #define USE_UART_INTERRUPTS 	(0)
@@ -39,7 +40,7 @@ uint8_t UART0_Receive();
 
 void Send_String_Poll(uint8_t * str);
 void UART0_Transmit_Poll_NoBuff(uint8_t c);
-void Send_String(uint8_t * str);
+//void Send_String(uint8_t * str);
 
 void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff);
 

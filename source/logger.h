@@ -21,7 +21,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "uart.h"
+
 
 typedef enum logger_status
 {
@@ -51,7 +51,12 @@ typedef enum function_called
 	RUNBIT, //runBut() called
 	STATESTATEMACHINE, //stateStateMachine() called
 	STATETABLEMACHINE, //stateTableMachine() called
-	TEST_BASICCHECKS  //Test_BasicChecks() called
+	TEST_BASICCHECKS,  //Test_BasicChecks() called
+	REMOVEITEM, //removeItem() called
+	ADD, //add() called
+	UART0_TRANSMIT, //UART0_Transmit() called
+	UART0_RECEIVE	//UART0_Transmit() called
+
 }function_called;
 
 extern _Bool log_a;
@@ -113,6 +118,14 @@ void log_data(uint32_t * loc, size_t length, logger_level level, function_called
 * @return void
 */
 void log_string(uint8_t * str, logger_level level, function_called func);
+
+/**
+* @brief Prints the run-time
+*
+*
+* @return void
+*/
+void log_time();
 
 /**
 * @brief Prints a temperature in Celsius

@@ -40,17 +40,20 @@ BUFF_ERROR add(CIRCBUFF* buffstruct, uint8_t item)
 	//check if pointers are not null
 	if(buffIsPointerValid(buffstruct) != BUFFER_PASS)
 	{
+		log_string((uint8_t*)"BUFFER INVALID", DBUG, ADD);
 		return BUFFER_INVALID;
 	}
 	//check is buffer is already full so no more writes
 	if(buffstruct->status == FULL)
 	{
+		log_string((uint8_t*)"BUFFER FULL", DBUG, ADD);
 		return BUFFER_FULL;
 	}
 	else
 	{
 		buffstruct->buffer[buffstruct->head] = item; //add item to buffer
 		buffstruct->status = GOOD;
+		log_string((uint8_t*)"ADDING TO BUFFER: ", DBUG, ADD);
 		//check if buffer is full and set status if so and do not increment
 		if(buffIsFull(buffstruct) == BUFFER_FULL)
 		{
@@ -69,16 +72,19 @@ uint8_t removeItem(CIRCBUFF* buffstruct)
 	//check if pointers are not null
 	if(buffIsPointerValid(buffstruct) != BUFFER_PASS)
 	{
+		log_string((uint8_t*)"BUFFER INVALID: ", DBUG, REMOVEITEM);
 		return c;
 	}
 	//check if buffer is currently empty, if so exit
 	if(buffstruct->status == EMPTY)
 	{
+		log_string((uint8_t*)"BUFFER EMPTY: ", DBUG, REMOVEITEM);
 		return c;
 	}
 	else
 	{
 		buffstruct->status = GOOD;
+		log_string((uint8_t*)"Removing Item: ", DBUG, REMOVEITEM);
 		//check if buffer pointers are equal before incrementing tail
 		if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)
 		{
@@ -87,6 +93,10 @@ uint8_t removeItem(CIRCBUFF* buffstruct)
 		}
 		c = buffstruct->buffer[buffstruct->tail];
 		buffstruct->tail= (buffstruct->tail+1) % buffstruct->length;
+		if(buffIsEmpty(buffstruct) == BUFFER_EMPTY)
+		{
+			buffstruct->status = EMPTY;
+		}
 		return c;
 	}
 }
