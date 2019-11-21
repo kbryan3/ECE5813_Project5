@@ -129,12 +129,6 @@ void UART0_Transmit(uint8_t c)
 		log_string((uint8_t*)"Transmitted Data: ", DBUG, UART0_TRANSMIT);
 }
 
-void UART0_Transmit_Poll_NoBuff(uint8_t c) {
-	while (!(UART0->S1 & UART0_S1_TDRE_MASK))
-			;
-	UART0->D = c;
-}
-
 uint8_t UART0_Receive() {
 	uint8_t c;
 	toggleLED(2);
@@ -236,16 +230,19 @@ void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff)
 {
 
 	uint8_t c;
+	//adds items to rxbuff
 	if(rxbuff->status != FULL)
 	{
 		c = UART0_Receive();
 		add(rxbuff, c);
 	}
+	//transfers items from rx to tx buffer
 	if(rxbuff->status != EMPTY && txbuff->status != FULL)
 	{
 		c = removeItem(rxbuff);
 		add(txbuff, c);
 	}
+	//empties txbuffer over the UART_TX
 	if(txbuff->status != EMPTY)
 	{
 		c = removeItem(txbuff);

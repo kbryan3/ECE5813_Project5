@@ -34,6 +34,17 @@
  * author.
  */
 
+/*********************************************************
+ *
+ *  File was edited to test a Circular Buffer
+ *
+ *  Kyle Bryan
+ *  November 2019
+ *  Version 1.0
+ *
+ *
+ */
+
 #include "System.h"
 #include "uCUnit-v1.0.h"
 #include "Testsuite.h"

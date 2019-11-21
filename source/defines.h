@@ -15,7 +15,7 @@
 //--------------------
 //#define UCUNITTEST //(must set terminal to 115200)
 //#define DEBUGGING
-//#define STATUS
+#define STATUS
 
 //ECHO vs APPLICATION
 //---------------------

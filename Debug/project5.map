@@ -584,7 +584,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x64 ./source/main.o
  .debug_macro   0x00000000       0x34 ./source/main.o
  .debug_macro   0x00000000       0x10 ./source/main.o
- .debug_macro   0x00000000       0x16 ./source/main.o
+ .debug_macro   0x00000000       0x1c ./source/main.o
  .debug_macro   0x00000000       0x1c ./source/main.o
  .group         0x00000000        0xc ./source/mtb.o
  .group         0x00000000        0xc ./source/mtb.o
@@ -633,8 +633,6 @@ Discarded input sections
  .bss.__stdin   0x00000000       0x3c ./source/uart.o
  .text.fputc    0x00000000       0x3c ./source/uart.o
  .text.fgetc    0x00000000       0x2c ./source/uart.o
- .text.UART0_Transmit_Poll_NoBuff
-                0x00000000       0x30 ./source/uart.o
  .text.echo     0x00000000       0x84 ./source/uart.o
  .debug_macro   0x00000000      0xaa8 ./source/uart.o
  .debug_macro   0x00000000       0x10 ./source/uart.o
@@ -661,7 +659,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x64 ./source/uart.o
  .debug_macro   0x00000000       0x34 ./source/uart.o
  .debug_macro   0x00000000       0x10 ./source/uart.o
- .debug_macro   0x00000000       0x16 ./source/uart.o
+ .debug_macro   0x00000000       0x1c ./source/uart.o
  .debug_macro   0x00000000       0x1c ./source/uart.o
  .debug_macro   0x00000000       0xd2 ./source/uart.o
  .group         0x00000000        0xc ./drivers/fsl_clock.o
@@ -2244,7 +2242,7 @@ END GROUP
  *(SORT_BY_ALIGNMENT(DataQuickAccess))
  *(SORT_BY_ALIGNMENT(RamFunction))
  *(SORT_BY_ALIGNMENT(.data*))
- .data.Representation.5621
+ .data.Representation.5619
                 0x1ffff080       0x11 ./source/logger.o
                 0x1ffff094                . = ALIGN (0x4)
  *fill*         0x1ffff091        0x3 ff
@@ -2257,7 +2255,7 @@ END GROUP
                 0x1ffff094                . = ALIGN (0x4)
                 0x1ffff094                _bss = .
  *(SORT_BY_ALIGNMENT(.bss*))
- .bss.buffer.5622
+ .bss.buffer.5620
                 0x1ffff094       0x32 ./source/logger.o
  *fill*         0x1ffff0c6        0x2 
  .bss.g_ticks   0x1ffff0c8        0x4 ./source/main.o
@@ -2320,37 +2318,37 @@ END GROUP
                 0x00001a24                _image_size = (_image_end - _image_start)
 OUTPUT(project5.axf elf32-littlearm)
 
-.debug_info     0x00000000     0x6ac8
+.debug_info     0x00000000     0x6aa6
  .debug_info    0x00000000      0x4df ./startup/startup_mkl25z4.o
  .debug_info    0x000004df      0x77b ./source/circularbuffer.o
  .debug_info    0x00000c5a      0x5a8 ./source/led_control.o
  .debug_info    0x00001202      0xc92 ./source/logger.o
- .debug_info    0x00001e94      0x89e ./source/main.o
- .debug_info    0x00002732       0x53 ./source/mtb.o
- .debug_info    0x00002785       0x3c ./source/semihost_hardfault.o
- .debug_info    0x000027c1     0x107c ./source/uart.o
- .debug_info    0x0000383d     0x1469 ./drivers/fsl_lpsci.o
- .debug_info    0x00004ca6     0x140a ./drivers/fsl_uart.o
- .debug_info    0x000060b0       0x3c ./board/peripherals.o
- .debug_info    0x000060ec      0x5a3 ./board/pin_mux.o
- .debug_info    0x0000668f      0x439 ./CMSIS/system_MKL25Z4.o
+ .debug_info    0x00001e94      0x8a0 ./source/main.o
+ .debug_info    0x00002734       0x53 ./source/mtb.o
+ .debug_info    0x00002787       0x3c ./source/semihost_hardfault.o
+ .debug_info    0x000027c3     0x1058 ./source/uart.o
+ .debug_info    0x0000381b     0x1469 ./drivers/fsl_lpsci.o
+ .debug_info    0x00004c84     0x140a ./drivers/fsl_uart.o
+ .debug_info    0x0000608e       0x3c ./board/peripherals.o
+ .debug_info    0x000060ca      0x5a3 ./board/pin_mux.o
+ .debug_info    0x0000666d      0x439 ./CMSIS/system_MKL25Z4.o
 
-.debug_abbrev   0x00000000     0x16b0
+.debug_abbrev   0x00000000     0x1687
  .debug_abbrev  0x00000000      0x18d ./startup/startup_mkl25z4.o
  .debug_abbrev  0x0000018d      0x1e7 ./source/circularbuffer.o
  .debug_abbrev  0x00000374      0x19a ./source/led_control.o
  .debug_abbrev  0x0000050e      0x31c ./source/logger.o
- .debug_abbrev  0x0000082a      0x1cd ./source/main.o
- .debug_abbrev  0x000009f7       0x46 ./source/mtb.o
- .debug_abbrev  0x00000a3d       0x31 ./source/semihost_hardfault.o
- .debug_abbrev  0x00000a6e      0x2d4 ./source/uart.o
- .debug_abbrev  0x00000d42      0x309 ./drivers/fsl_lpsci.o
- .debug_abbrev  0x0000104b      0x323 ./drivers/fsl_uart.o
- .debug_abbrev  0x0000136e       0x31 ./board/peripherals.o
- .debug_abbrev  0x0000139f      0x1bb ./board/pin_mux.o
- .debug_abbrev  0x0000155a      0x156 ./CMSIS/system_MKL25Z4.o
+ .debug_abbrev  0x0000082a      0x1c0 ./source/main.o
+ .debug_abbrev  0x000009ea       0x46 ./source/mtb.o
+ .debug_abbrev  0x00000a30       0x31 ./source/semihost_hardfault.o
+ .debug_abbrev  0x00000a61      0x2b8 ./source/uart.o
+ .debug_abbrev  0x00000d19      0x309 ./drivers/fsl_lpsci.o
+ .debug_abbrev  0x00001022      0x323 ./drivers/fsl_uart.o
+ .debug_abbrev  0x00001345       0x31 ./board/peripherals.o
+ .debug_abbrev  0x00001376      0x1bb ./board/pin_mux.o
+ .debug_abbrev  0x00001531      0x156 ./CMSIS/system_MKL25Z4.o
 
-.debug_aranges  0x00000000      0x618
+.debug_aranges  0x00000000      0x610
  .debug_aranges
                 0x00000000      0x160 ./startup/startup_mkl25z4.o
  .debug_aranges
@@ -2366,56 +2364,56 @@ OUTPUT(project5.axf elf32-littlearm)
  .debug_aranges
                 0x000002b8       0x20 ./source/semihost_hardfault.o
  .debug_aranges
-                0x000002d8       0x78 ./source/uart.o
+                0x000002d8       0x70 ./source/uart.o
  .debug_aranges
-                0x00000350      0x118 ./drivers/fsl_lpsci.o
+                0x00000348      0x118 ./drivers/fsl_lpsci.o
  .debug_aranges
-                0x00000468      0x130 ./drivers/fsl_uart.o
+                0x00000460      0x130 ./drivers/fsl_uart.o
  .debug_aranges
-                0x00000598       0x20 ./board/peripherals.o
+                0x00000590       0x20 ./board/peripherals.o
  .debug_aranges
-                0x000005b8       0x38 ./board/pin_mux.o
+                0x000005b0       0x38 ./board/pin_mux.o
  .debug_aranges
-                0x000005f0       0x28 ./CMSIS/system_MKL25Z4.o
+                0x000005e8       0x28 ./CMSIS/system_MKL25Z4.o
 
-.debug_ranges   0x00000000      0x540
+.debug_ranges   0x00000000      0x538
  .debug_ranges  0x00000000      0x150 ./startup/startup_mkl25z4.o
  .debug_ranges  0x00000150       0x48 ./source/circularbuffer.o
  .debug_ranges  0x00000198       0x30 ./source/led_control.o
  .debug_ranges  0x000001c8       0x78 ./source/logger.o
  .debug_ranges  0x00000240       0x10 ./source/main.o
  .debug_ranges  0x00000250       0x10 ./source/semihost_hardfault.o
- .debug_ranges  0x00000260       0x68 ./source/uart.o
- .debug_ranges  0x000002c8      0x108 ./drivers/fsl_lpsci.o
- .debug_ranges  0x000003d0      0x120 ./drivers/fsl_uart.o
- .debug_ranges  0x000004f0       0x10 ./board/peripherals.o
- .debug_ranges  0x00000500       0x28 ./board/pin_mux.o
- .debug_ranges  0x00000528       0x18 ./CMSIS/system_MKL25Z4.o
+ .debug_ranges  0x00000260       0x60 ./source/uart.o
+ .debug_ranges  0x000002c0      0x108 ./drivers/fsl_lpsci.o
+ .debug_ranges  0x000003c8      0x120 ./drivers/fsl_uart.o
+ .debug_ranges  0x000004e8       0x10 ./board/peripherals.o
+ .debug_ranges  0x000004f8       0x28 ./board/pin_mux.o
+ .debug_ranges  0x00000520       0x18 ./CMSIS/system_MKL25Z4.o
 
-.debug_macro    0x00000000      0xcfc
+.debug_macro    0x00000000      0xd02
  .debug_macro   0x00000000       0x29 ./startup/startup_mkl25z4.o
  .debug_macro   0x00000029      0x166 ./source/circularbuffer.o
  .debug_macro   0x0000018f       0x16 ./source/circularbuffer.o
  .debug_macro   0x000001a5       0x1c ./source/circularbuffer.o
  .debug_macro   0x000001c1      0x154 ./source/led_control.o
  .debug_macro   0x00000315      0x19c ./source/logger.o
- .debug_macro   0x000004b1       0x16 ./source/logger.o
- .debug_macro   0x000004c7       0x1c ./source/logger.o
- .debug_macro   0x000004e3      0x1a5 ./source/main.o
- .debug_macro   0x00000688       0x7c ./source/main.o
- .debug_macro   0x00000704       0x2f ./source/mtb.o
- .debug_macro   0x00000733       0x82 ./source/mtb.o
- .debug_macro   0x000007b5       0x10 ./source/mtb.o
- .debug_macro   0x000007c5       0x11 ./source/semihost_hardfault.o
- .debug_macro   0x000007d6      0x19b ./source/uart.o
- .debug_macro   0x00000971       0xec ./drivers/fsl_lpsci.o
- .debug_macro   0x00000a5d       0xf2 ./drivers/fsl_uart.o
- .debug_macro   0x00000b4f       0x1b ./board/peripherals.o
- .debug_macro   0x00000b6a       0xee ./board/pin_mux.o
- .debug_macro   0x00000c58       0x10 ./board/pin_mux.o
- .debug_macro   0x00000c68       0x94 ./CMSIS/system_MKL25Z4.o
+ .debug_macro   0x000004b1       0x1c ./source/logger.o
+ .debug_macro   0x000004cd       0x1c ./source/logger.o
+ .debug_macro   0x000004e9      0x1a5 ./source/main.o
+ .debug_macro   0x0000068e       0x7c ./source/main.o
+ .debug_macro   0x0000070a       0x2f ./source/mtb.o
+ .debug_macro   0x00000739       0x82 ./source/mtb.o
+ .debug_macro   0x000007bb       0x10 ./source/mtb.o
+ .debug_macro   0x000007cb       0x11 ./source/semihost_hardfault.o
+ .debug_macro   0x000007dc      0x19b ./source/uart.o
+ .debug_macro   0x00000977       0xec ./drivers/fsl_lpsci.o
+ .debug_macro   0x00000a63       0xf2 ./drivers/fsl_uart.o
+ .debug_macro   0x00000b55       0x1b ./board/peripherals.o
+ .debug_macro   0x00000b70       0xee ./board/pin_mux.o
+ .debug_macro   0x00000c5e       0x10 ./board/pin_mux.o
+ .debug_macro   0x00000c6e       0x94 ./CMSIS/system_MKL25Z4.o
 
-.debug_line     0x00000000     0x3d52
+.debug_line     0x00000000     0x3d1d
  .debug_line    0x00000000      0x1e7 ./startup/startup_mkl25z4.o
  .debug_line    0x000001e7      0x4e4 ./source/circularbuffer.o
  .debug_line    0x000006cb      0x3ac ./source/led_control.o
@@ -2423,39 +2421,39 @@ OUTPUT(project5.axf elf32-littlearm)
  .debug_line    0x00001155      0x37c ./source/main.o
  .debug_line    0x000014d1       0xd1 ./source/mtb.o
  .debug_line    0x000015a2       0x5a ./source/semihost_hardfault.o
- .debug_line    0x000015fc      0x667 ./source/uart.o
- .debug_line    0x00001c63      0xd32 ./drivers/fsl_lpsci.o
- .debug_line    0x00002995      0xd21 ./drivers/fsl_uart.o
- .debug_line    0x000036b6       0x5c ./board/peripherals.o
- .debug_line    0x00003712      0x301 ./board/pin_mux.o
- .debug_line    0x00003a13      0x33f ./CMSIS/system_MKL25Z4.o
+ .debug_line    0x000015fc      0x632 ./source/uart.o
+ .debug_line    0x00001c2e      0xd32 ./drivers/fsl_lpsci.o
+ .debug_line    0x00002960      0xd21 ./drivers/fsl_uart.o
+ .debug_line    0x00003681       0x5c ./board/peripherals.o
+ .debug_line    0x000036dd      0x301 ./board/pin_mux.o
+ .debug_line    0x000039de      0x33f ./CMSIS/system_MKL25Z4.o
 
-.debug_str      0x00000000    0x3486a
+.debug_str      0x00000000    0x34857
  .debug_str     0x00000000     0x3168 ./startup/startup_mkl25z4.o
                                0x31bf (size before relaxing)
  .debug_str     0x00003168    0x2e92a ./source/circularbuffer.o
                               0x318d0 (size before relaxing)
  .debug_str     0x00031a92       0xbd ./source/led_control.o
                               0x3168e (size before relaxing)
- .debug_str     0x00031b4f      0x6f7 ./source/logger.o
-                              0x31f32 (size before relaxing)
- .debug_str     0x00032246      0x6ce ./source/main.o
-                              0x321ac (size before relaxing)
- .debug_str     0x00032914      0x532 ./source/mtb.o
+ .debug_str     0x00031b4f      0x6ff ./source/logger.o
+                              0x31f3a (size before relaxing)
+ .debug_str     0x0003224e      0x6ce ./source/main.o
+                              0x321b4 (size before relaxing)
+ .debug_str     0x0003291c      0x532 ./source/mtb.o
                                0x32cb (size before relaxing)
- .debug_str     0x00032e46       0x1f ./source/semihost_hardfault.o
+ .debug_str     0x00032e4e       0x1f ./source/semihost_hardfault.o
                                0x2db8 (size before relaxing)
- .debug_str     0x00032e65      0x1bc ./source/uart.o
-                              0x32498 (size before relaxing)
- .debug_str     0x00033021      0xcec ./drivers/fsl_lpsci.o
+ .debug_str     0x00032e6d      0x1a1 ./source/uart.o
+                              0x32485 (size before relaxing)
+ .debug_str     0x0003300e      0xcec ./drivers/fsl_lpsci.o
                               0x318ce (size before relaxing)
- .debug_str     0x00033d0d      0x93d ./drivers/fsl_uart.o
+ .debug_str     0x00033cfa      0x93d ./drivers/fsl_uart.o
                               0x318f1 (size before relaxing)
- .debug_str     0x0003464a       0x31 ./board/peripherals.o
+ .debug_str     0x00034637       0x31 ./board/peripherals.o
                                0x2dc9 (size before relaxing)
- .debug_str     0x0003467b      0x18b ./board/pin_mux.o
+ .debug_str     0x00034668      0x18b ./board/pin_mux.o
                               0x30b08 (size before relaxing)
- .debug_str     0x00034806       0x64 ./CMSIS/system_MKL25Z4.o
+ .debug_str     0x000347f3       0x64 ./CMSIS/system_MKL25Z4.o
                               0x2fc30 (size before relaxing)
 
 .comment        0x00000000       0x75
@@ -2593,19 +2591,19 @@ OUTPUT(project5.axf elf32-littlearm)
  .ARM.attributes
                 0x00000744       0x2c c:/nxp/mcuxpressoide_11.0.1_2563/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.0.1.201907311258/tools/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp\libcr_nohost_nf.a(__sys_write.o)
 
-.debug_frame    0x00000000     0x128c
+.debug_frame    0x00000000     0x126c
  .debug_frame   0x00000000      0x3b0 ./startup/startup_mkl25z4.o
  .debug_frame   0x000003b0      0x110 ./source/circularbuffer.o
  .debug_frame   0x000004c0       0xac ./source/led_control.o
  .debug_frame   0x0000056c      0x1bc ./source/logger.o
  .debug_frame   0x00000728       0x30 ./source/main.o
  .debug_frame   0x00000758       0x20 ./source/semihost_hardfault.o
- .debug_frame   0x00000778      0x194 ./source/uart.o
- .debug_frame   0x0000090c      0x418 ./drivers/fsl_lpsci.o
- .debug_frame   0x00000d24      0x468 ./drivers/fsl_uart.o
- .debug_frame   0x0000118c       0x2c ./board/peripherals.o
- .debug_frame   0x000011b8       0x88 ./board/pin_mux.o
- .debug_frame   0x00001240       0x4c ./CMSIS/system_MKL25Z4.o
+ .debug_frame   0x00000778      0x174 ./source/uart.o
+ .debug_frame   0x000008ec      0x418 ./drivers/fsl_lpsci.o
+ .debug_frame   0x00000d04      0x468 ./drivers/fsl_uart.o
+ .debug_frame   0x0000116c       0x2c ./board/peripherals.o
+ .debug_frame   0x00001198       0x88 ./board/pin_mux.o
+ .debug_frame   0x00001220       0x4c ./CMSIS/system_MKL25Z4.o
 
 Cross Reference Table
 
@@ -2849,7 +2847,6 @@ UART0_IRQHandler                                  ./source/uart.o
                                                   ./startup/startup_mkl25z4.o
 UART0_Receive                                     ./source/uart.o
 UART0_Transmit                                    ./source/uart.o
-UART0_Transmit_Poll_NoBuff                        ./source/uart.o
 UART1_DriverIRQHandler                            ./drivers/fsl_uart.o
                                                   ./startup/startup_mkl25z4.o
 UART1_IRQHandler                                  ./startup/startup_mkl25z4.o

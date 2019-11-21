@@ -164,4 +164,15 @@ void printLevel(logger_level level);
 */
 void printFunction(function_called func);
 
+/**
+* @brief Converts from an int to an ascii valuu accepted by UART
+*
+* @param uint8_t num value needing to be converted
+* @param uint8_t base the base(8,10,16) the value is in
+*
+* @return uint8_t* pointer to a printable ascii value of the number
+*/
+//code comes from http://www.firmcodes.com/write-printf-function-c/
+uint8_t * convert(uint8_t num, uint8_t base);
+
 #endif /* __LOGGER_H__ */

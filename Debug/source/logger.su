@@ -9,6 +9,6 @@ logger.c:97:6:log_string	16	static
 logger.c:119:6:log_temp	32	static
 logger.c:137:6:log_int	16	static
 logger.c:157:6:log_time	32	static
-logger.c:183:6:printLevel	16	static
-logger.c:199:6:printFunction	16	static
-logger.c:268:11:convert	32	static
+logger.c:186:6:printLevel	16	static
+logger.c:202:6:printFunction	16	static
+logger.c:271:11:convert	32	static

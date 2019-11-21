@@ -30,9 +30,16 @@
 
 /**
  * @file    main.c
- * @brief   Application entry point to run a Temperature Sensing Program
+ * @brief   Application entry point to run a UART application
  *
+ * 				Application runs multiple modes(Polling and Interrupt) for
+ * 				a UART and can run these modes in Echo or an "application" mode.
+ * 				Application mode counts up the number of characters in a word
+ * 				sent over the terminal and displays the count.
  *
+ * @author Kyle Bryan
+ * @date November 2019
+ * version 1.0
  *
  */
 #include <stdio.h>
@@ -108,9 +115,10 @@ int main(void)
 	while (1) {
 #ifdef ECHO
 #ifndef INTERRUPT
+		//run echo mode
 		echo(tx_buffer, rx_buffer);
 #else
-
+		//run interrupt echo mode
 #endif
 #else  //Application Mode
 		//wait until a non-alpha character is entered
@@ -162,6 +170,7 @@ int main(void)
 	}
 
 #else
+	//run test mode
     log_a = 1;
 	log_level = TEST;
     Testsuite_RunTests();

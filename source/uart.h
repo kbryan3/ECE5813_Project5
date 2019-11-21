@@ -34,17 +34,54 @@
 #define BUS_CLOCK 						(24e6)
 #define SYS_CLOCK							(48e6)
 
+/**
+* @brief Initializes the UART0
+*
+* @param uint32_t baud_rate baud rate you want UART to run at
+*
+* @return void
+*/
 void Init_UART0(uint32_t baud_rate);
+
+/**
+* @brief Transmits a character out of UART
+*
+* @param uint8_t c character to be transmitted
+*
+* @return void
+*/
 void UART0_Transmit(uint8_t c);
+
+/**
+* @brief Receives a character from UART
+*
+* @param void
+*
+* @return uint8_t character received
+*/
 uint8_t UART0_Receive();
 
+/**
+* @brief Transmits a string out of UART
+*
+* @param uint8_t * str string to be transmitted
+*
+* @return void
+*/
 void Send_String_Poll(uint8_t * str);
-void UART0_Transmit_Poll_NoBuff(uint8_t c);
+
 //void Send_String(uint8_t * str);
 
-void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff);
 
-uint8_t * convert(uint8_t num, uint8_t base);
+/**
+* @brief Polling Echo function that echos character inputted on terminal
+*
+* @param CIRCBUFF * txbuff transmit circular buffer
+* @param CIRCBUFF * rxbuff receive circular buffer
+*
+* @return void
+*/
+void echo(CIRCBUFF* txbuff, CIRCBUFF* rxbuff);
 
 extern uint8_t app[128];
 
