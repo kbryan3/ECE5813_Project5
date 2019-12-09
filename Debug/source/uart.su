@@ -1,11 +1,7 @@
-core_cm0plus.h:745:22:NVIC_EnableIRQ	16	static
-core_cm0plus.h:791:22:NVIC_ClearPendingIRQ	16	static
-core_cm0plus.h:804:22:NVIC_SetPriority	24	static
 stdio.h:157:12:fputc	16	static
 stdio.h:154:12:fgetc	16	static
 uart.c:47:6:Init_UART0	24	static
 uart.c:120:6:UART0_Transmit	16	static
 uart.c:132:9:UART0_Receive	16	static
-uart.c:146:6:UART0_IRQHandler	24	static
 uart.c:199:6:Send_String_Poll	16	static
 uart.c:229:6:echo	32	static
